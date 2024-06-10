@@ -36,33 +36,32 @@ class Login : AppCompatActivity() {
         btnRegistrarse2.setOnClickListener {
             val activity_ticket = Intent(this, Ticket::class.java)
 
-            CoroutineScope( Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 val objConexion = ClaseConexion().CadenaConexion()
-                val VerUsuer = objConexion?.prepareStatement("select * from Usuario where nombre_usuario = ? AND contra_usuario = ?);")!!
-                VerUsuer.setString(1 , txtUsuario.text.toString())
+                val VerUsuer =
+                    objConexion?.prepareStatement("select * from Usuario where nombre_usuario = ? AND contra_usuario = ?")!!
+                VerUsuer.setString(1, txtUsuario.text.toString())
                 VerUsuer.setString(2, txtContra2.text.toString())
 
                 //En este caso se va a ejecutar el comando en la base
 
-               val usuarioVerdadero = VerUsuer.executeQuery()
+                val usuarioVerdadero = VerUsuer.executeQuery()
 
-            withContext(Dispatchers.Main) {
-    if (usuarioVerdadero.next()) {
-        startActivity(activity_ticket)
-    } else {
-println("Error")
-    }
-}
+                withContext(Dispatchers.Main) {
+                    if (usuarioVerdadero.next()) {
+                        startActivity(activity_ticket)
+
+                    } else {
+                        println("Error")
+                    }
+
+
+                }
+
 
             }
 
 
-
-
-
         }
-
-
-
     }
 }

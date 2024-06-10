@@ -101,8 +101,8 @@ class Ticket : AppCompatActivity() {
                 addTicket.setString(5, txtAutor.text.toString())
                 addTicket.setString(6, txtEmail_Autor.text.toString())
                 addTicket.setString(7, txtFecha_Creacion.text.toString())
-                addTicket.setString(8, txtEstado.toString())
-                addTicket.setString(9, txtFecha_Finalizacion.toString())
+                addTicket.setString(8, txtEstado.text.toString())
+                addTicket.setString(9, txtFecha_Finalizacion.text.toString())
                 addTicket.executeUpdate()
 
                 //Refresco la lista
@@ -118,5 +118,4 @@ class Ticket : AppCompatActivity() {
     }
 
 
-}
 }
