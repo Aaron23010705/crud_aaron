@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="88dp"
         android:layout_marginBottom="104dp"
+        android:fontFamily="@font/poppins_extralight"
         android:text="Regirstro de Usuario"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/txtNombre"
