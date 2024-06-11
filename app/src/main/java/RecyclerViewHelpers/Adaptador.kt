@@ -25,7 +25,7 @@ class Adaptador(private var Datos: List<dataClassTicket>) : RecyclerView.Adapter
 
     fun actualizarPantalla (uuid: String, nuevoEstado: String){
         val index = Datos.indexOfFirst { it.UUID_Ticket == uuid }
-        Datos[index].titulo_ticket = nuevoEstado
+        Datos[index].estado= nuevoEstado
         notifyDataSetChanged()
     }
     fun actualizarDatos(nuevoEstado: String, uuid:String){
@@ -47,7 +47,7 @@ class Adaptador(private var Datos: List<dataClassTicket>) : RecyclerView.Adapter
         }
     }
 
-    fun EliminarDatos(titulo_ticket: String, Posicion: Int) {
+    fun EliminarDatos(estado: String, Posicion: Int) {
         val listaDatos = Datos.toMutableList()
         listaDatos.removeAt(Posicion)
         GlobalScope.launch(Dispatchers.IO) {
@@ -57,8 +57,8 @@ class Adaptador(private var Datos: List<dataClassTicket>) : RecyclerView.Adapter
 
             // 2- Crear una variable que contenga un preparestatement (donde se mete el código de sqlserver
             val deleteTicket =
-                objConexion?.prepareStatement("delete from Ticket where titulo = ?")!!
-            deleteTicket.setString(1, titulo_ticket)
+                objConexion?.prepareStatement("delete from Ticket where estado = ?")!!
+            deleteTicket.setString(1, estado)
             deleteTicket.executeUpdate()
 
             val commit = objConexion.prepareStatement("commit")!!
@@ -86,7 +86,7 @@ class Adaptador(private var Datos: List<dataClassTicket>) : RecyclerView.Adapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val ticket = Datos[position]
-        holder.textView.text = ticket.titulo_ticket
+        holder.textView.text = ticket.estado
 
         holder.imgBorrar.setOnClickListener {
 
@@ -98,7 +98,7 @@ class Adaptador(private var Datos: List<dataClassTicket>) : RecyclerView.Adapter
 
             //Botones
             builder.setPositiveButton("Si") { dialog, which ->
-                EliminarDatos(ticket.titulo_ticket, position)
+                EliminarDatos(ticket.estado, position)
             }
             builder.setNegativeButton("no") { dialog, which ->
                 dialog.dismiss()
@@ -117,7 +117,7 @@ class Adaptador(private var Datos: List<dataClassTicket>) : RecyclerView.Adapter
 //Agregar un cuadro de texto para que el usuario escriba el nuevo nombre.
 
                 val cuadroTexto = EditText(context)
-                cuadroTexto.setHint(ticket.titulo_ticket)
+                cuadroTexto.setHint(ticket.estado)
                 builder.setView(cuadroTexto)
 
                 builder.setPositiveButton("Actualizar ") { dialog, which ->
